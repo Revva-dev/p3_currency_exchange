@@ -20,7 +20,7 @@ public class CurrencyDto {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
-    @Max(1000000000)
+    @Max(1000000)
     private Long count;
 
     private Long id;
@@ -37,8 +37,8 @@ public class CurrencyDto {
     private String value;
 
     @XmlElement(name = "NumCode")
-    @Min(2)
-    @Max(3)
+    @Min(10)
+    @Max(999)
     @NotNull
     private Long isoNumCode;
 

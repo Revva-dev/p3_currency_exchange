@@ -7,7 +7,7 @@ import ru.skillbox.currency.exchange.entity.Currency;
 @Mapper(componentModel = "spring")
 public interface CurrencyMapper {
 
-    CurrencyDto convertToDto(Currency currency);
+    CurrencyDto mapToDto(Currency currency);
 
-    Currency convertToEntity(CurrencyDto currencyDto);
+    Currency mapToEntity(CurrencyDto currencyDto);
 }

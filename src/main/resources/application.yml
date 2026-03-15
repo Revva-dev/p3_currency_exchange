@@ -20,4 +20,9 @@ spring:
         show_sql: true
         hbm2ddl:
           auto: none
+app:
+  cbr-uri: https://cbr.ru/scripts/XML_daily.asp
+  task:
+    schedule:
+      delay: 3600000
 

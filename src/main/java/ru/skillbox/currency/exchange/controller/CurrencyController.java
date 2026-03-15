@@ -1,15 +1,22 @@
 package ru.skillbox.currency.exchange.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
 import ru.skillbox.currency.exchange.service.CurrencyService;
 
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Map;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/currency")
 public class CurrencyController {
+
     private final CurrencyService service;
 
     @GetMapping(value = "/{id}")
@@ -17,13 +24,20 @@ public class CurrencyController {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @GetMapping(value = "/convert")
-    ResponseEntity<Double> convertValue(@RequestParam("value") Long value, @RequestParam("numCode") Long numCode) {
-        return ResponseEntity.ok(service.convertValue(value, numCode));
+
+    @PostMapping(value = "/convert")
+    ResponseEntity<Double> convertValue(@Valid @RequestBody CurrencyDto currencyDto) {
+        Long count = currencyDto.getCount();
+        Long numCode = currencyDto.getIsoNumCode();
+        return ResponseEntity.ok(service.convertValue(count, numCode));
     }
 
-    @PostMapping("/create")
-    ResponseEntity<CurrencyDto> create(@RequestBody CurrencyDto dto) {
-        return ResponseEntity.ok(service.create(dto));
+    @JsonView(CurrencyDto.GetAllCurrencies.class)
+    @GetMapping(value = "/all")
+    ResponseEntity<Map<String, Collection<CurrencyDto>>> getAll() {
+        return ResponseEntity.ok(service.getALL());
     }
 }
+
+
+
